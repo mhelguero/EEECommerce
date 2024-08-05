@@ -11,6 +11,7 @@ import { Wrapper, StyledButton } from "./App.styles";
 import { CartItemType } from "./types";
 import { getOrderItems } from "./api";
 import RegistrationForm from "./components/Registration/Registration.tsx";
+import LoginForm from "./components/Login/Login.tsx";
 
 function App() {
   const [cartOpen, setCartOpen] = useState(false);
@@ -55,9 +56,11 @@ function App() {
   if (isLoading) return <LinearProgress />;
   if (error) return <div>Something went wrong</div>;
 
-  return (
+  return (  
     <Wrapper>
+      <h1>EeE-Commerce</h1>
       <RegistrationForm />
+      <LoginForm />
       <Drawer anchor="right" open={cartOpen} onClose={() => setCartOpen(false)}>
         <Cart
           cartItems={cartItems}

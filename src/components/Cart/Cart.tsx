@@ -15,7 +15,7 @@ type Props = {
 const Cart: React.FC<Props> = ({ cartItems, addToCart, removeFromCart }) => {
   const calculateTotal = (items: CartItemType[]) =>
     items.reduceRight(
-      (accumulator: number, item) => accumulator + item.amount * item.price,
+      (accumulator: number, item) => accumulator + item.amount * item.price/100,
       0
     );
 

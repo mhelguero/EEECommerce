@@ -1,10 +1,10 @@
 import Button from '@mui/material/Button';
 
 // Types
-import { CartItemType } from '../App';
+import { CartItemType } from '../../types';
 
 // Styles
-import { Wrapper } from '../CartItem/CartItem.styles';
+import { Wrapper } from './CartItem.styles';
 
 type Props = {
     item: CartItemType;
@@ -17,8 +17,8 @@ const CartItem: React.FC<Props> = ({item, addToCart, removeFromCart}) => (
         <div>
             <h3>{item.title}</h3>
             <div className="information">
-                <p>Price: ${item.price}</p>
-                <p>Total: ${(item.amount * item.price).toFixed(2)}</p>
+                <p>Price: ${item.price/100}</p>
+                <p>Total: ${(item.amount * item.price/100).toFixed(2)}</p>
             </div>
             <div className="buttons">
                 <Button size="small" disableElevation variant='contained' onClick={() => removeFromCart(item.id)}>

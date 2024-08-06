@@ -10,8 +10,10 @@ import Cart from "./components/Cart/Cart";
 import { Wrapper, StyledButton } from "./App.styles";
 import { CartItemType } from "./types";
 import { getOrderItems } from "./api";
-import RegistrationForm from "./components/Registration/Registration.tsx";
-import LoginForm from "./components/Login/Login.tsx";
+import RegistrationForm from "./components/Registration/RegistrationForm.tsx";
+import LoginForm from "./components/Login/LoginForm.tsx";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Layout from "./pages/layout.tsx";
 
 function App() {
   const [cartOpen, setCartOpen] = useState(false);
@@ -59,8 +61,15 @@ function App() {
   return (  
     <Wrapper>
       <h1>EeE-Commerce</h1>
-      <RegistrationForm />
-      <LoginForm />
+      <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index />        
+          <Route path="registration" element={<RegistrationForm />} />  {/* blogs path combines with parent Route path and becomes /blogs and displays <Blogs /> */}
+          <Route path="login" element={<LoginForm />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>      
       <Drawer anchor="right" open={cartOpen} onClose={() => setCartOpen(false)}>
         <Cart
           cartItems={cartItems}

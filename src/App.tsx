@@ -46,6 +46,7 @@ function App() {
   };
 
   const handleRemoveFromCart = (id: number) => {
+    
     setCartItems((prev) =>
       prev.reduce((acc, item) => {
         if (item.id === id) {

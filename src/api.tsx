@@ -13,7 +13,7 @@ export const getOrderItems = async (): Promise<CartItemType[]> => {
     id: product.product_id,
     category: "default", 
     description: product.description, 
-    image: "https://imgs.search.brave.com/t23UE44SC5DumVfc6QuE5TnQfGwWqfW7bNrYVPVpY7o/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTYx/NzUxNTA4MS9waG90/by9nbGFzcy1zYWx0/LXNoYWtlci1vbi10/aGUtdGFibGUuanBn/P3M9NjEyeDYxMiZ3/PTAmaz0yMCZjPXoz/aWxsVHFmREZhYU14/dGVwSDJWZXZiTzJ2/X3REeEJKUWFhSWZs/bmV5VWM9", // Set appropriate default or fetched values
+    image: product.image, 
     price: product.price, 
     title: product.name, 
     amount: product.quantity,

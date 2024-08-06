@@ -9,7 +9,7 @@ export type UserType = {
 
 export type Order = {
   orderId: number;
-  user: User;
+  user: UserType;
   date: string; // or Date if you want to handle it as a Date object
 };
 
@@ -18,6 +18,7 @@ export type Product = {
   price: number;
   discount: number;
   name: string;
+  image: string;
   description: string;
   quantity: number;
 };

@@ -39,6 +39,7 @@ const RegistrationForm: React.FC = () => {
 
   return (
     <>
+      <h3>Register</h3>
       <form id="registration" onSubmit={handleSubmit}>
         <div>
           <label>First Name:</label>

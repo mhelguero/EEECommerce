@@ -14,6 +14,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./pages/layout.tsx";
 import Registration from "./pages/registration.tsx";
 import Login from "./pages/login.tsx";
+import Profile from "./pages/profile.tsx";
 
 function App() {
   const [cartOpen, setCartOpen] = useState(false);
@@ -69,6 +70,7 @@ function App() {
           <Route path="/" element={<Layout userId={userId}/>}>
             <Route index />
             {/* "registration" path combines with parent "/" Route path and becomes "/registration" and displays <Registration /> */}
+            <Route path="profile" element={<Profile userId={userId}/>} />
             <Route path="registration" element={<Registration />} />
             <Route path="login" element={<Login setUserId={setUserId}/>} />
           </Route>

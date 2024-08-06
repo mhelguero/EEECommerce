@@ -10,10 +10,10 @@ import Cart from "./components/Cart/Cart";
 import { Wrapper, StyledButton } from "./App.styles";
 import { CartItemType } from "./types";
 import { getOrderItems } from "./api";
-import RegistrationForm from "./components/Registration/RegistrationForm.tsx";
-import LoginForm from "./components/Login/LoginForm.tsx";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./pages/layout.tsx";
+import Registration from "./pages/registration.tsx";
+import Login from "./pages/login.tsx";
 
 function App() {
   const [cartOpen, setCartOpen] = useState(false);
@@ -58,18 +58,20 @@ function App() {
   if (isLoading) return <LinearProgress />;
   if (error) return <div>Something went wrong</div>;
 
-  return (  
+  return (
     <Wrapper>
       <h1>EeE-Commerce</h1>
       <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index />        
-          <Route path="registration" element={<RegistrationForm />} />  {/* blogs path combines with parent Route path and becomes /blogs and displays <Blogs /> */}
-          <Route path="login" element={<LoginForm />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>      
+        <Routes>
+          {/*  */}
+          <Route path="/" element={<Layout />}>
+            <Route index />
+            {/* "registration" path combines with parent "/" Route path and becomes "/registration" and displays <Registration /> */}
+            <Route path="registration" element={<Registration />} />
+            <Route path="login" element={<Login />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
       <Drawer anchor="right" open={cartOpen} onClose={() => setCartOpen(false)}>
         <Cart
           cartItems={cartItems}
@@ -82,6 +84,8 @@ function App() {
           <AddShoppingCartIcon />
         </Badge>
       </StyledButton>
+
+      {/* Product Display */}
       <Grid container spacing={3}>
         {data?.map((item) => (
           <Grid item key={item.id} xs={12} sm={4}>

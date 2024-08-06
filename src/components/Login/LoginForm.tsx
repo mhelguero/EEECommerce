@@ -7,12 +7,14 @@ interface UserLogin {
 }
 
 const LoginForm: React.FC = () => {
+
   // This will hold user input into the Login form
   const [credentials, setCredentials] = useState<UserLogin>({
     email: "",
     password: "",
   });
 
+  const [status, setStatus] = useState<number>();
   /**
    * Stores user input for email and password inside credentials.email and credentials.password to pass credentials into handleSubmit().
    *
@@ -38,13 +40,14 @@ const LoginForm: React.FC = () => {
         `http://localhost:8080/auth?email=${credentials.email}&password=${credentials.password}`,
         credentials
       );
-   
-        // retrieve logged-in user's userId and userType from response headers
-        const userId = response.headers["userid"];
-        const userType = response.headers["usertype"];
 
-        console.log("User ID:", userId);
-        console.log("User Type:", userType);    
+      // retrieve logged-in user's userId and userType from response headers
+      const userId = response.headers["userid"];
+      const userType = response.headers["usertype"];
+      setStatus(response.status);
+
+      console.log("User ID:", userId);
+      console.log("User Type:", userType);
     } catch (error) {
       console.error("Error during request:", error);
     }
@@ -76,6 +79,14 @@ const LoginForm: React.FC = () => {
         </div>
         <button type="submit">Login</button>
       </form>
+
+      {/* TOOD: add link for user profile if login successful */}
+      {status !== undefined ? (
+        <p>{status >= 400 ? "" : "Login Successful"}</p>
+      ) : (
+        ""
+      )}
+
       <br />
       <br />
     </>

@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 
 interface UserLogin {
@@ -33,27 +34,17 @@ const LoginForm: React.FC = () => {
     event.preventDefault();
 
     try {
-      const response = await fetch(
+      const response = await axios.post(
         `http://localhost:8080/auth?email=${credentials.email}&password=${credentials.password}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(credentials),
-        }
+        credentials
       );
-
-      if (response.ok) {
+   
         // retrieve logged-in user's userId and userType from response headers
-        const userId = response.headers.get("userId");
-        const userType = response.headers.get("userType");
+        const userId = response.headers["userid"];
+        const userType = response.headers["usertype"];
 
         console.log("User ID:", userId);
-        console.log("User Type:", userType);
-      } else {
-        console.error("Request failed with status:", response.status);
-      }
+        console.log("User Type:", userType);    
     } catch (error) {
       console.error("Error during request:", error);
     }

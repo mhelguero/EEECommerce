@@ -7,11 +7,12 @@ interface Props {
 }
 
 const UserInfo: React.FC<Props> = ({ userId }: { userId: number }) => {
-  // this will hold the retrieved User Data
+  // this will hold the retrieved User data
   const [userInfo, setUserInfo] = useState<UserType | null>(null);
 
   // runs as soon as this Route is visited
   useEffect(() => {
+    // arrow function to retrieve user info
     const getUserInfo = async (userId: number) => {
       try {
         console.log("user id in UserInfo.tsx: ", userId);
@@ -27,7 +28,7 @@ const UserInfo: React.FC<Props> = ({ userId }: { userId: number }) => {
       }
     };
 
-    // executes the function to retrieve and set User Info
+    // executes the function to retrieve and set User info
     if (userId) {
       getUserInfo(userId);
     }
@@ -36,7 +37,15 @@ const UserInfo: React.FC<Props> = ({ userId }: { userId: number }) => {
   return (
     <>
       {/* display the retrieved user data as the content of this component*/}
-      {userInfo?.firstName}
+      <h2>Profile</h2>
+      <ul>
+        <li>
+          {userInfo?.firstName} {userInfo?.lastName}
+        </li>
+        <li>{userInfo?.userType.toLowerCase()}</li>
+        <li>{userInfo?.address}</li>
+        <li>{userInfo?.email}</li>
+      </ul>
     </>
   );
 };

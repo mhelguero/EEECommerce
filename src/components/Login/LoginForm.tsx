@@ -6,15 +6,18 @@ interface UserLogin {
   password: string;
 }
 
-const LoginForm: React.FC = () => {
+interface Props {
+  setUserId: (userId: number) => void;
+}
 
+const LoginForm: React.FC<Props> = ({ setUserId }) => {
   // This will hold user input into the Login form
   const [credentials, setCredentials] = useState<UserLogin>({
     email: "",
     password: "",
   });
 
-  const [status, setStatus] = useState<number>();
+  const [status, setStatus] = useState<number>(0);
   /**
    * Stores user input for email and password inside credentials.email and credentials.password to pass credentials into handleSubmit().
    *
@@ -43,12 +46,15 @@ const LoginForm: React.FC = () => {
 
       // retrieve logged-in user's userId and userType from response headers
       const userId = response.headers["userid"];
+      setUserId(userId);
+
       const userType = response.headers["usertype"];
       setStatus(response.status);
 
-      console.log("User ID:", userId);
-      console.log("User Type:", userType);
+      console.log("LoginForm.tsx User ID:", userId);
+      console.log("LoginForm.tsx User Type:", userType);
     } catch (error) {
+      setStatus(500);
       console.error("Error during request:", error);
     }
   };
@@ -79,12 +85,10 @@ const LoginForm: React.FC = () => {
         </div>
         <button type="submit">Login</button>
       </form>
-
-      {/* TOOD: add link for user profile if login successful */}
-      {status !== undefined ? (
-        <p>{status >= 400 ? "" : "Login Successful"}</p>
-      ) : (
+      {status === 0 ? (
         ""
+      ) : (
+        <p>{status >= 400 ? "Failed to Login" : "Login Successful"}</p>
       )}
 
       <br />

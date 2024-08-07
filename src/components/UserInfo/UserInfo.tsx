@@ -19,6 +19,8 @@ const UserInfo: React.FC<Props> = ({ userId }: { userId: number }) => {
         const response = await axios.get(
           `http://localhost:8080/users/${userId}`
         );
+
+        // GET reseponse.data has same structure as UserType, so can assign directly to userInfo via setUserInfo()
         setUserInfo(response.data);
 
         const userInfo = response.data;

@@ -89,7 +89,11 @@ function App() {
           <Drawer
             anchor="right"
             open={cartOpen}
-            onClose={() => setCartOpen(false)}>
+            onClose={() => setCartOpen(false)}
+            sx={{
+              '& .MuiPaper-root':{ backgroundColor: 'black', color: 'white'},
+            }}
+            >
             <Cart
               cartItems={cartItems}
               addToCart={handleAddToCart}

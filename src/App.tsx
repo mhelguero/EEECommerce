@@ -9,18 +9,21 @@ import Badge from "@mui/material/Badge";
 import Cart from "./components/Cart/Cart";
 import { Wrapper, StyledButton } from "./App.styles";
 import { CartItemType } from "./types";
-import { getOrderItems } from "./api";
+import { getProducts } from "./api";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./pages/layout.tsx";
 import Registration from "./pages/registration.tsx";
 import Login from "./pages/login.tsx";
+import Profile from "./pages/profile.tsx";
 
 function App() {
   const [cartOpen, setCartOpen] = useState(false);
   const [cartItems, setCartItems] = useState([] as CartItemType[]);
+  const [userId, setUserId] = useState<number | null>(null);  // holds logged-in user's id to pass it to other components
+  
   const { data, isLoading, error } = useQuery<CartItemType[]>(
-    "orderItems",
-    getOrderItems
+    "Products",
+    getProducts
   );
 
   const getTotalItems = (items: CartItemType[]) =>
@@ -43,6 +46,7 @@ function App() {
   };
 
   const handleRemoveFromCart = (id: number) => {
+    
     setCartItems((prev) =>
       prev.reduce((acc, item) => {
         if (item.id === id) {
@@ -57,18 +61,19 @@ function App() {
 
   if (isLoading) return <LinearProgress />;
   if (error) return <div>Something went wrong</div>;
-
+  console.log("User id in App.tsx:", userId);
   return (
     <Wrapper>
       <h1>EeE-Commerce</h1>
       <BrowserRouter>
         <Routes>
           {/*  */}
-          <Route path="/" element={<Layout />}>
+          <Route path="/" element={<Layout userId={userId}/>}>
             <Route index />
             {/* "registration" path combines with parent "/" Route path and becomes "/registration" and displays <Registration /> */}
+            <Route path="profile" element={<Profile userId={userId}/>} />
             <Route path="registration" element={<Registration />} />
-            <Route path="login" element={<Login />} />
+            <Route path="login" element={<Login setUserId={setUserId}/>} />
           </Route>
         </Routes>
       </BrowserRouter>

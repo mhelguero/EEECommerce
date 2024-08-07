@@ -20,6 +20,8 @@ const RegistrationForm: React.FC = () => {
     userType: "CUSTOMER",
   });
 
+  const [status, setStatus] = useState<number>(0);
+
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {    
@@ -32,6 +34,7 @@ const RegistrationForm: React.FC = () => {
     try {
       const response = await axios.post("http://localhost:8080/users", user);
       console.log("User registered:", response.data);
+      setStatus(response.status);
     } catch (error) {
       console.error(error);
     }
@@ -90,23 +93,16 @@ const RegistrationForm: React.FC = () => {
             onChange={handleChange}
             required
           />
-        </div>
-        <div>
-          <label>User Type:</label>
-          <select
-            name="userType"
-            value={user.userType}
-            onChange={handleChange}
-            required>
-            <option value="CUSTOMER">Customer</option>
-            <option value="EMPLOYEE">Employee</option>
-          </select>
-        </div>
+        </div>        
         <button type="submit">
         Register
       </button>
       </form>
-      <br />
+      {status === 0 ? (
+        ""
+      ) : (
+        <p>{status >= 400 ? "Failed to Register" : "Registration Successful"}</p>
+      )}      <br />
       <br />
     </>
   );

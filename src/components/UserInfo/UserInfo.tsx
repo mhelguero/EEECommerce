@@ -42,11 +42,11 @@ const UserInfo: React.FC<Props> = ({ userId }: { userId: number }) => {
       <h2>Profile</h2>
       <ul>
         <li>
-          {userInfo?.firstName} {userInfo?.lastName}
+          Name: {userInfo?.firstName} {userInfo?.lastName}
         </li>
-        <li>{userInfo?.userType.toLowerCase()}</li>
-        <li>{userInfo?.address}</li>
-        <li>{userInfo?.email}</li>
+        <li>Account Type: {userInfo?.userType.toLowerCase()}</li>
+        <li>Home Address: {userInfo?.address}</li>
+        <li>Email: {userInfo?.email}</li>
       </ul>
     </>
   );

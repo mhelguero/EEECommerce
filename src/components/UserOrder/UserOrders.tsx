@@ -20,7 +20,7 @@ const UserOrders: React.FC<Props> = ({ userId }: { userId: number }) => {
         console.log("user id in UserOrders.tsx: ", userId);
         const response = await axios.get(
 
-          `http://localhost:8080/orders/users/${userId}`
+          `http://localhost:8080/orders/user/${userId}`
 
         );
 

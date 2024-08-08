@@ -97,7 +97,7 @@ function App() {
         params.append('quantity', '1');
 
         const headers = {
-        userId: 1, // Replace with actual userId if needed
+        userId: userId, // Replace with actual userId if needed
         userType: "CUSTOMER"
         };
 
@@ -130,13 +130,13 @@ function App() {
     params.append('quantity', '-1');
 
     const headers = {
-    userId: '1', // Replace with actual userId if needed
+    userId: userId, // Replace with actual userId if needed
     userType: "CUSTOMER"
     };
 
     try {
     await axios.post(url, params, { headers });
-    console.log('Item removed from cart');
+    console.log('Item removed from cart with userId = '+userId);
     fetchCartItems(); // Fetch the updated cart items
     handleRemoveFromCart(id);
     } catch (error) {
@@ -190,7 +190,7 @@ function App() {
           <Grid container spacing={3}>
             {data?.map((item) => (
               <Grid item key={item.id} xs={12} sm={4}>
-                <Item item={item} handleAddToCart={handleAddToCart} />
+                <Item item={item} handleAddToCart={handleAddToCart} userId={userId} />
               </Grid>
             ))}
           </Grid>

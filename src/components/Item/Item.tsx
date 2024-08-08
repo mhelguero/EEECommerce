@@ -11,9 +11,10 @@ import { Wrapper } from './Item.style';
 type Props = {
   item: CartItemType;
   handleAddToCart: (clickedItem: CartItemType) => void;
+  userId: number;
 };
 
-const Item: React.FC<Props> = ({ item, handleAddToCart }) => {
+const Item: React.FC<Props> = ({ item, handleAddToCart, userId }) => {
   const handleAddToCartWithRequest = async (item: CartItemType) => {
     const url = 'http://localhost:8080/cart';
     const params = new URLSearchParams();
@@ -21,7 +22,7 @@ const Item: React.FC<Props> = ({ item, handleAddToCart }) => {
     params.append('quantity', '1'); // You can adjust the quantity as needed
 
     const headers = {
-      userId: '1', // Replace with actual userId if needed
+      userId: userId, // Replace with actual userId if needed
     };
 
     try {

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import CartItem from "../CartItem/CartItem"; // Adjust the path as needed
 import { CartItemType } from "../../types";
@@ -20,11 +20,15 @@ const Cart: React.FC<Props> = ({
   fetchCartItems,
   cartItems,
 }) => {
+  const [dummyState, setDummyState] = useState(false);
+
   useEffect(() => {
     fetchCartItems();
-  }, []);
+  }, [dummyState]);
 
   const calculateTotal = (items: CartItemType[]) =>
+    
+
     items.reduceRight((accumulator: number, item) => {
       console.log(
         item.discount,
@@ -40,6 +44,7 @@ const Cart: React.FC<Props> = ({
     }, 0);
 
   async function handleCheckout() {
+    
     const header = {
       userId: userId,
     };
@@ -48,6 +53,8 @@ const Cart: React.FC<Props> = ({
       method: "post",
       headers: header,
     });
+
+    setDummyState(!dummyState);
   }
 
   return (
@@ -61,19 +68,17 @@ const Cart: React.FC<Props> = ({
             removeFromCart={removeFromCart}
           />
         ))
-        
       ) : (
         <p>No items in cart</p>
       )}
-        <h2>Total: ${calculateTotal(cartItems).toFixed(2)}</h2>
-        <Button 
-            onClick={handleCheckout}
-            color="primary"
-            variant="contained"
-            disabled={cartItems.length <= 0}
-        >
-            Checkout
-        </Button>
+      <h2>Total: ${calculateTotal(cartItems).toFixed(2)}</h2>
+      <Button
+        onClick={handleCheckout}
+        color="primary"
+        variant="contained"
+        disabled={cartItems.length <= 0}>
+        Checkout
+      </Button>
     </Wrapper>
   );
 };

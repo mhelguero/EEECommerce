@@ -47,7 +47,7 @@ const LoginForm: React.FC<Props> = ({ setUserId }) => {
       // retrieve logged-in user's userId and userType from response headers
       const userId = response.headers["userid"];
       setUserId(userId);
-      
+
       const userType = response.headers["usertype"];
       setStatus(response.status);
 

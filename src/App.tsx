@@ -29,6 +29,7 @@ function App() {
   useEffect(() => {
     if (userId && loggedIn) navigate("/");
     setLoggedIn(false);
+    fetchCartItems();
   }, [userId, navigate]);
 
   const { data, isLoading, error } = useQuery<CartItemType[]>(
@@ -38,6 +39,42 @@ function App() {
 
     const getTotalItems = (items: CartItemType[]) =>
         items.reduce((acc: number, item) => acc + item.amount, 0);
+
+    const sortByTitle = (items: CartItemType[]) => {
+      return items.sort((a, b) => a.title.localeCompare(b.title));
+  };
+  
+    const fetchCartItems = async () => {
+      const url = 'http://localhost:8080/cart';
+
+      try {
+          const response = await axios({
+              url: url,
+              method: 'get',
+              headers: {
+                  userId: userId,
+                  userType: "CUSTOMER",
+              },
+          });
+
+          console.log('Fetched cart items:', response.data);
+
+          // Map the fetched data to match the CartItemType
+          const transformedData = response.data.map((item: any) => ({
+              id: item.product.product_id,
+              category: item.product.category,
+              description: item.product.description,
+              image: item.product.image,
+              price: item.product.price,
+              title: item.product.name,
+              amount: item.count,
+          }));
+
+          setCartItems(sortByTitle(transformedData));
+      } catch (error) {
+          console.error('Error fetching cart items:', error);
+      }
+  };
 
     const handleAddToCart = (clickedItem: CartItemType) => {
         setCartItems((prev) => {
@@ -53,7 +90,26 @@ function App() {
             return [...prev, {...clickedItem, amount: 1}];
           });
       };
+      const handleAddToCartWithRequest = async (item: CartItemType) => {
+        const url = 'http://localhost:8080/cart';
+        const params = new URLSearchParams();
+        params.append('productId', item.id.toString());
+        params.append('quantity', '1');
 
+        const headers = {
+        userId: 1, // Replace with actual userId if needed
+        userType: "CUSTOMER"
+        };
+
+        try {
+        await axios.post(url, params, { headers });
+        console.log('Item added to cart');
+        fetchCartItems(); // Fetch the updated cart items
+        handleAddToCart(item);
+        } catch (error) {
+        console.error('Error adding item to cart:', error);
+        }
+  };
 
   const handleRemoveFromCart = (id: number) => {
     setCartItems((prev) =>
@@ -67,6 +123,26 @@ function App() {
       }, [] as CartItemType[])
     );
   };
+  const handleRemoveFromCartWithRequest = async (id: number) => {
+    const url = 'http://localhost:8080/cart';
+    const params = new URLSearchParams();
+    params.append('productId', id.toString());
+    params.append('quantity', '-1');
+
+    const headers = {
+    userId: '1', // Replace with actual userId if needed
+    userType: "CUSTOMER"
+    };
+
+    try {
+    await axios.post(url, params, { headers });
+    console.log('Item removed from cart');
+    fetchCartItems(); // Fetch the updated cart items
+    handleRemoveFromCart(id);
+    } catch (error) {
+    console.error('Error removing item from cart:', error);
+    }
+};
 
   if (isLoading) return <LinearProgress />;
   if (error) return <div>Something went wrong</div>;
@@ -97,8 +173,10 @@ function App() {
             }}
             >
             <Cart
-              // addToCart={handleAddToCart}
-              // removeFromCart={handleRemoveFromCart}
+              addToCart={handleAddToCartWithRequest}
+              removeFromCart={handleRemoveFromCartWithRequest}
+              fetchCartItems={fetchCartItems}
+              cartItems={cartItems}
               userId={userId}
             />
           </Drawer>

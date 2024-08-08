@@ -10,72 +10,21 @@ type Props = {
     addToCart: (clickedItem: CartItemType) => void;
     removeFromCart: (id: number) => void;
     userId: number;
+    fetchCartItems: () => void;
+    cartItems:CartItemType[];
 };
 
 
-const sortByTitle = (items: CartItemType[]) => {
-    return items.sort((a, b) => a.title.localeCompare(b.title));
-};
 
-const Cart: React.FC = ({addToCart, removeFromCart, userId}) => {
-    const [cartItems, setCartItems] = useState<CartItemType[]>([]);
 
-    const fetchCartItems = async () => {
-        const url = 'http://localhost:8080/cart';
+const Cart: React.FC<Props> = ({addToCart, removeFromCart, userId, fetchCartItems, cartItems}) => {
 
-        try {
-            const response = await axios({
-                url: url,
-                method: 'get',
-                headers: {
-                    userId: userId,
-                    userType: "CUSTOMER",
-                },
-            });
-
-            console.log('Fetched cart items:', response.data);
-
-            // Map the fetched data to match the CartItemType
-            const transformedData = response.data.map((item: any) => ({
-                id: item.product.product_id,
-                category: item.product.category,
-                description: item.product.description,
-                image: item.product.image,
-                price: item.product.price,
-                title: item.product.name,
-                amount: item.count,
-            }));
-
-            setCartItems(sortByTitle(transformedData));
-        } catch (error) {
-            console.error('Error fetching cart items:', error);
-        }
-    };
+    
 
     useEffect(() => {
         fetchCartItems();
     }, []);
-
-    const handleAddToCart = (clickedItem: CartItemType) => {
-        setCartItems((prev) =>
-            prev.map((item) =>
-                item.id === clickedItem.id ? {...item, amount: item.amount + 1} : item
-            )
-        );
-    };
-
-    const handleRemoveFromCart = (id: number) => {
-        setCartItems((prev) =>
-            prev.reduce((acc, item) => {
-                if (item.id === id) {
-                    if (item.amount === 1) return acc;
-                    return [...acc, {...item, amount: item.amount - 1}];
-                } else {
-                    return [...acc, item];
-                }
-            }, [] as CartItemType[])
-        );
-    };
+   
 
     const calculateTotal = (items: CartItemType[]) =>
         items.reduceRight(
@@ -103,9 +52,8 @@ const Cart: React.FC = ({addToCart, removeFromCart, userId}) => {
                     <CartItem
                         key={item.id}
                         item={item}
-                        addToCart={handleAddToCart}
-                        removeFromCart={handleRemoveFromCart}
-                        fetchCartItems={fetchCartItems} // Pass the function to refresh the cart
+                        addToCart={addToCart}
+                        removeFromCart={removeFromCart}
                     />
                 ))
             ) : (

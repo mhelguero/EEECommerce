@@ -1,37 +1,97 @@
-import CartItem from "../CartItem/CartItem";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import CartItem from '../CartItem/CartItem'; // Adjust the path as needed
+import { CartItemType } from '../../types';
+import { Wrapper } from './Cart.styles'; // Add your styles here
+import {StyledButton} from "../../App.styles.ts";
 
-// Styles
-import { Wrapper } from "./Cart.styles";
-
-// Types
-import { CartItemType } from "../../types";
-
-type Props = {
-  cartItems: CartItemType[];
-  addToCart: (clickedItem: CartItemType) => void;
-  removeFromCart: (id: number) => void;
+const sortByTitle = (items: CartItemType[]) => {
+  return items.sort((a, b) => a.title.localeCompare(b.title));
 };
 
-const Cart: React.FC<Props> = ({ cartItems, addToCart, removeFromCart }) => {
-  const calculateTotal = (items: CartItemType[]) =>
-    items.reduceRight(
-      (accumulator: number, item) => accumulator + item.amount * item.price/100,
-      0
+const Cart: React.FC = () => {
+  const [cartItems, setCartItems] = useState<CartItemType[]>([]);
+
+  const fetchCartItems = async () => {
+    const url = 'http://localhost:8080/cart';
+
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          userId: '1', // Replace with actual userId if needed
+          userType: 'CUSTOMER'
+        },
+      });
+
+      console.log('Fetched cart items:', response.data);
+
+      // Map the fetched data to match the CartItemType
+      const transformedData = response.data.map((item: any) => ({
+        id: item.product.product_id,
+        category: item.product.category,
+        description: item.product.description,
+        image: item.product.image,
+        price: item.product.price,
+        title: item.product.name,
+        amount: item.count,
+      }));
+
+      setCartItems(sortByTitle(transformedData));
+    } catch (error) {
+      console.error('Error fetching cart items:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCartItems();
+  }, []);
+
+  const handleAddToCart = (clickedItem: CartItemType) => {
+    setCartItems((prev) =>
+      prev.map((item) =>
+        item.id === clickedItem.id ? { ...item, amount: item.amount + 1 } : item
+      )
     );
+  };
+
+  const handleRemoveFromCart = (id: number) => {
+    setCartItems((prev) =>
+      prev.reduce((acc, item) => {
+        if (item.id === id) {
+          if (item.amount === 1) return acc;
+          return [...acc, { ...item, amount: item.amount - 1 }];
+        } else {
+          return [...acc, item];
+        }
+      }, [] as CartItemType[])
+    );
+  };
+
+  const calculateTotal = (items: CartItemType[]) =>
+    items.reduceRight((accumulator: number, item) => accumulator + item.amount * item.price/100, 0);
+
+  const handleCheckout = () => {
+    // Implement checkout functionality here
+    console.log('Proceeding to checkout');
+  };
 
   return (
     <Wrapper>
-      <h2>Shopping Cart</h2>
-      {cartItems.length === 0 ? <p>No Items in cart.</p> : null}
-      {cartItems.map((item) => (
-        <CartItem
-          key={item.id}
-          item={item}
-          addToCart={addToCart}
-          removeFromCart={removeFromCart}
-        />
-      ))}
+      {cartItems.length > 0 ? (
+        cartItems.map((item) => (
+          <CartItem
+            key={item.id}
+            item={item}
+            addToCart={handleAddToCart}
+            removeFromCart={handleRemoveFromCart}
+            fetchCartItems={fetchCartItems} // Pass the function to refresh the cart
+          />
+        ))
+      ) : (
+        <p>No items in cart</p>
+      )}
       <h2>Total: ${calculateTotal(cartItems).toFixed(2)}</h2>
+      <StyledButton onClick={handleCheckout}>Checkout</StyledButton>
     </Wrapper>
   );
 };

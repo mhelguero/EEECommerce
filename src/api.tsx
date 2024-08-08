@@ -17,7 +17,9 @@ export const getProducts = async (): Promise<CartItemType[]> => {
     price: product.price, 
     title: product.name, 
     amount: product.quantity,
+    discount: product.discount,
   }));
-  
+
+  console.log(transformedData);
   return transformedData;
 };

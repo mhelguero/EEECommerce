@@ -81,6 +81,7 @@ function App() {
             </BrowserRouter>
             <Drawer anchor="right" open={cartOpen} onClose={() => setCartOpen(false)}>
                 <Cart
+                    userId={userId}
                     cartItems={cartItems}
                     addToCart={handleAddToCart}
                     removeFromCart={handleRemoveFromCart}

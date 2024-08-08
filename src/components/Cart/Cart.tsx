@@ -14,23 +14,30 @@ type Props = {
     removeFromCart: (id: number) => void;
 };
 
-const Cart: React.FC<Props> = ({cartItems, addToCart, removeFromCart}) => {
+const Cart: React.FC<Props> = ({cartItems, addToCart, removeFromCart, userId}) => {
     const calculateTotal = (items: CartItemType[]) =>
         items.reduceRight(
-            (accumulator: number, item) => accumulator + item.amount * item.price / 100,
-            0
+            (accumulator: number, item) => {
+                console.log(item.discount);
+                return +((accumulator + item.amount * item.price * (1 - item.discount) / 100).toFixed(2));
+            }, 0
         );
 
     async function handleCheckout() {
         const header = {
-            userType: 'CUSTOMER',
-            userId: 1
+            userId: userId
         }
-        const {result} = await axios({
+        const response = await axios({
             url: 'http://localhost:8080/orders',
             method: 'post',
             headers: header
         });
+
+        for (const [index, obj] of Object.entries(response.data)) {
+            for(const [key, value] of Object.entries(obj)){
+                console.log(`${key}: ${value}`);
+            }
+        }
     }
 
     return (

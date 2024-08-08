@@ -12,6 +12,7 @@ type Props = {
     cartItems: CartItemType[];
     addToCart: (clickedItem: CartItemType) => void;
     removeFromCart: (id: number) => void;
+    userId: number;
 };
 
 const Cart: React.FC<Props> = ({cartItems, addToCart, removeFromCart, userId}) => {

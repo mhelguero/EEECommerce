@@ -100,6 +100,7 @@ function App() {
               cartItems={cartItems}
               addToCart={handleAddToCart}
               removeFromCart={handleRemoveFromCart}
+              userId={userId}
             />
           </Drawer>
           <StyledButton onClick={() => setCartOpen(true)}>

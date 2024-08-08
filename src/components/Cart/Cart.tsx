@@ -55,6 +55,7 @@ const Cart: React.FC<Props> = ({
     });
 
     setDummyState(!dummyState);
+    alert("Checkout Successful! Total: $"+ calculateTotal(cartItems));
   }
 
   return (

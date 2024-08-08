@@ -94,12 +94,6 @@ const Cart: React.FC = ({addToCart, removeFromCart, userId}) => {
             method: 'post',
             headers: header
         });
-
-        for (const [index, obj] of Object.entries(response.data)) {
-            for (const [key, value] of Object.entries(obj)) {
-                console.log(`${key}: ${value}`);
-            }
-        }
     }
 
     return (

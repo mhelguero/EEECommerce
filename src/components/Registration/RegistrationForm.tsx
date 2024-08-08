@@ -99,12 +99,11 @@ const RegistrationForm: React.FC = () => {
             onChange={handleChange}
             required>
             <option value="CUSTOMER">Customer</option>
-            <option value="EMPLOYEE">Employee</option>
           </select>
         </div>
         <button type="submit">
-        Register
-      </button>
+          Register
+        </button>
       </form>
       <br />
       <br />

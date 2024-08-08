@@ -61,6 +61,7 @@ const Cart: React.FC<Props> = ({
             removeFromCart={removeFromCart}
           />
         ))
+        
       ) : (
         <p>No items in cart</p>
       )}
@@ -69,6 +70,7 @@ const Cart: React.FC<Props> = ({
             onClick={handleCheckout}
             color="primary"
             variant="contained"
+            disabled={cartItems.length <= 0}
         >
             Checkout
         </Button>

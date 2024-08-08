@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import Item from "./components/Item/Item";
 import Drawer from "@mui/material/Drawer";
-import { LinearProgress } from "@mui/material";
+import {LinearProgress} from "@mui/material";
 import Grid from "@mui/material/Grid";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import Badge from "@mui/material/Badge";
 import Cart from "./components/Cart/Cart";
+
 import { Wrapper, StyledButton } from "./App.styles";
 import { CartItemType } from "./types";
 import { getProducts } from "./api";
@@ -15,6 +16,7 @@ import Layout from "./pages/layout.tsx";
 import Registration from "./pages/registration.tsx";
 import Login from "./pages/login.tsx";
 import Profile from "./pages/profile.tsx";
+import axios from "axios";
 
 function App() {
   const [cartOpen, setCartOpen] = useState(false);
@@ -34,24 +36,26 @@ function App() {
     getProducts
   );
 
-  const getTotalItems = (items: CartItemType[]) =>
-    items.reduce((acc: number, item) => acc + item.amount, 0);
+    const {data, isLoading, error} = useQuery<CartItemType[]>(
+        "Products",
+        getProducts
+    );
 
-  const handleAddToCart = (clickedItem: CartItemType) => {
-    setCartItems((prev) => {
-      const isItemInCart = prev.find((item) => item.id === clickedItem.id);
-      console.log(clickedItem);
-      if (isItemInCart) {
-        return prev.map((item) =>
-          item.id === clickedItem.id
-            ? { ...item, amount: item.amount + 1 }
-            : item
-        );
-      }
+    const getTotalItems = (items: CartItemType[]) =>
+        items.reduce((acc: number, item) => acc + item.amount, 0);
 
-      return [...prev, { ...clickedItem, amount: 1 }];
-    });
-  };
+    const handleAddToCart = (clickedItem: CartItemType) => {
+        setCartItems((prev) => {
+            const isItemInCart = prev.find((item) => item.id === clickedItem.id);
+            console.log(clickedItem);
+            if (isItemInCart) {
+                return prev.map((item) =>
+                    item.id === clickedItem.id
+                        ? {...item, amount: item.amount + 1}
+                        : item
+                );
+            }
+
 
   const handleRemoveFromCart = (id: number) => {
     setCartItems((prev) =>

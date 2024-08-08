@@ -5,11 +5,20 @@ import { CartItemType } from '../../types';
 import { Wrapper } from './Cart.styles'; // Add your styles here
 import {StyledButton} from "../../App.styles.ts";
 
+
+type Props = {
+    cartItems: CartItemType[];
+    addToCart: (clickedItem: CartItemType) => void;
+    removeFromCart: (id: number) => void;
+    userId: number;
+};
+
+
 const sortByTitle = (items: CartItemType[]) => {
   return items.sort((a, b) => a.title.localeCompare(b.title));
 };
 
-const Cart: React.FC = () => {
+const Cart: React.FC = ({cartItems, addToCart, removeFromCart, userId}) => {
   const [cartItems, setCartItems] = useState<CartItemType[]>([]);
 
   const fetchCartItems = async () => {
@@ -18,8 +27,8 @@ const Cart: React.FC = () => {
     try {
       const response = await axios.get(url, {
         headers: {
-          userId: '1', // Replace with actual userId if needed
-          userType: 'CUSTOMER'
+          userId: userId,
+          userType: "CUSTOMER",
         },
       });
 
@@ -68,12 +77,29 @@ const Cart: React.FC = () => {
   };
 
   const calculateTotal = (items: CartItemType[]) =>
-    items.reduceRight((accumulator: number, item) => accumulator + item.amount * item.price/100, 0);
+        items.reduceRight(
+            (accumulator: number, item) => {
+                console.log(item.discount, (accumulator + item.amount * item.price * (1 - item.discount) / 100).toFixed(2));
+                return +((accumulator + item.amount * item.price * (1 - item.discount) / 100).toFixed(2));
+            }, 0
+        );
 
-  const handleCheckout = () => {
-    // Implement checkout functionality here
-    console.log('Proceeding to checkout');
-  };
+  async function handleCheckout() {
+        const header = {
+            userId: userId
+        }
+        const response = await axios({
+            url: 'http://localhost:8080/orders',
+            method: 'post',
+            headers: header
+        });
+
+        for (const [index, obj] of Object.entries(response.data)) {
+            for(const [key, value] of Object.entries(obj)){
+                console.log(`${key}: ${value}`);
+            }
+        }
+    }
 
   return (
     <Wrapper>

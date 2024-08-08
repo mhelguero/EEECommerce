@@ -1,12 +1,16 @@
+
 import React from 'react';
 import Button from '@mui/material/Button';
 import axios from 'axios';
+=======
+import Button from "@mui/material/Button";
+
 
 // Types
-import { CartItemType } from '../../types';
+import { CartItemType } from "../../types";
 
 // Styles
-import { Wrapper } from './CartItem.styles';
+import { Wrapper } from "./CartItem.styles";
 
 type Props = {
   item: CartItemType;
@@ -78,5 +82,4 @@ const CartItem: React.FC<Props> = ({ item, addToCart, removeFromCart, fetchCartI
     </Wrapper>
   );
 };
-
 export default CartItem;

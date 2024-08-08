@@ -1,4 +1,5 @@
 import UserInfo from "../UserInfo/UserInfo";
+import UserOrders from "../UserOrder/UserOrders";
 
 interface Props{
   userId: number;
@@ -6,7 +7,8 @@ interface Props{
 
 const UserProfile: React.FC<Props> = ({ userId }: { userId: number}) => {
   return <>
-    <UserInfo userId={userId} />
+    <UserInfo userId={userId} />    
+    <UserOrders userId={userId} />
   </>;
 };
 

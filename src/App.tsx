@@ -36,11 +36,6 @@ function App() {
     getProducts
   );
 
-    const {data, isLoading, error} = useQuery<CartItemType[]>(
-        "Products",
-        getProducts
-    );
-
     const getTotalItems = (items: CartItemType[]) =>
         items.reduce((acc: number, item) => acc + item.amount, 0);
 
@@ -55,6 +50,9 @@ function App() {
                         : item
                 );
             }
+            return [...prev, {...clickedItem, amount: 1}];
+          });
+      };
 
 
   const handleRemoveFromCart = (id: number) => {

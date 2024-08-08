@@ -95,8 +95,8 @@ const RegistrationForm: React.FC = () => {
           />
         </div>        
         <button type="submit">
-        Register
-      </button>
+          Register
+        </button>
       </form>
       {status === 0 ? (
         ""

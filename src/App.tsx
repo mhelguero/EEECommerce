@@ -97,9 +97,8 @@ function App() {
             }}
             >
             <Cart
-              cartItems={cartItems}
-              addToCart={handleAddToCart}
-              removeFromCart={handleRemoveFromCart}
+              // addToCart={handleAddToCart}
+              // removeFromCart={handleRemoveFromCart}
               userId={userId}
             />
           </Drawer>

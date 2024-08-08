@@ -2,9 +2,6 @@
 import React from 'react';
 import Button from '@mui/material/Button';
 import axios from 'axios';
-=======
-import Button from "@mui/material/Button";
-
 
 // Types
 import { CartItemType } from "../../types";

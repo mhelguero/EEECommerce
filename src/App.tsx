@@ -68,6 +68,7 @@ function App() {
               price: item.product.price,
               title: item.product.name,
               amount: item.count,
+              discount: item.product.discount
           }));
 
           setCartItems(sortByTitle(transformedData));
@@ -130,7 +131,7 @@ function App() {
     params.append('quantity', '-1');
 
     const headers = {
-    userId: userId, // Replace with actual userId if needed
+    userId: userId, 
     userType: "CUSTOMER"
     };
 

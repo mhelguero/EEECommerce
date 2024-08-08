@@ -18,7 +18,7 @@ const Cart: React.FC<Props> = ({cartItems, addToCart, removeFromCart, userId}) =
     const calculateTotal = (items: CartItemType[]) =>
         items.reduceRight(
             (accumulator: number, item) => {
-                console.log(item.discount);
+                console.log(item.discount, (accumulator + item.amount * item.price * (1 - item.discount) / 100).toFixed(2));
                 return +((accumulator + item.amount * item.price * (1 - item.discount) / 100).toFixed(2));
             }, 0
         );

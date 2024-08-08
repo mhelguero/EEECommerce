@@ -44,7 +44,8 @@ const UserOrders: React.FC<Props> = ({ userId }: { userId: number }) => {
     <>
       {/* display the retrieved user data as the content of this component*/}
       <h2>Profile</h2>
-       <ul>
+      <ul>
+
          <li>Orders:</li>
          {userOrders.map((order) => (
            <li key={order.orderId}>

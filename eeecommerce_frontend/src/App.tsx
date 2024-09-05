@@ -46,7 +46,7 @@ function App() {
   };
 
   const fetchCartItems = async () => {
-    const url = "http://localhost:8080/cart";
+    const url = "http://3.141.164.75/:8080/cart";
 
     try {
       const response = await axios({

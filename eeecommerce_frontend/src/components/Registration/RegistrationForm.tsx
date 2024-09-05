@@ -32,7 +32,7 @@ const RegistrationForm: React.FC = () => {
     event.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:8080/users", user);
+      const response = await axios.post("http://3.141.164.75:8080/users", user);
       console.log("User registered:", response.data);
       setStatus(response.status);
     } catch (error) {

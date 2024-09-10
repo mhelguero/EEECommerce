@@ -14,7 +14,7 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://18.118.75.83:5173") // Frontend URL
+                        .allowedOrigins("*") // Frontend URL
                         .allowedMethods("*") // Allow all methods (GET, POST, etc.)
                         .allowedHeaders("*") // Allow all headers
                         .allowCredentials(true) // Allow credentials

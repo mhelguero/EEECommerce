@@ -46,7 +46,7 @@ function App() {
   };
 
   const fetchCartItems = async () => {
-    const url = "http://3.141.164.75/:8080/cart";
+    const url = "http://18.118.75.83/:8080/cart";
 
     try {
       const response = await axios({
@@ -94,7 +94,7 @@ function App() {
   };
 
   const handleAddToCartWithRequest = async (item: CartItemType) => {
-    const url = "http://3.141.164.75:8080/cart";
+    const url = "http://18.118.75.83:8080/cart";
     const params = new URLSearchParams();
     params.append("productId", item.id.toString());
     params.append("quantity", "1");
@@ -128,7 +128,7 @@ function App() {
   };
 
   const handleRemoveFromCartWithRequest = async (id: number) => {
-    const url = "http://3.141.164.75:8080/cart";
+    const url = "http://18.118.75.83:8080/cart";
     const params = new URLSearchParams();
     params.append("productId", id.toString());
     params.append("quantity", "-1");

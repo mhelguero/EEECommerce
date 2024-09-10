@@ -6,7 +6,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class CorsConfig{
+public class CorsConfig {
 
     @Bean
     public WebMvcConfigurer corsConfigurer() {
@@ -14,7 +14,7 @@ public class CorsConfig{
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://18.118.75.83:8080")
+                        .allowedOrigins("http://18.118.75.83:5173") // Change to your frontend URL
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
                         .allowedHeaders("*")
                         .exposedHeaders("userId", "userType");

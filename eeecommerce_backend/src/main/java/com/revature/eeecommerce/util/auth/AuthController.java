@@ -10,6 +10,7 @@ import javax.security.sasl.AuthenticationException;
 
 @RestController
 @RequestMapping("/auth")
+@CrossOrigin(origins = {"http://18.118.75.83:5173"})
 public class AuthController {
     private final AuthService authService;
 

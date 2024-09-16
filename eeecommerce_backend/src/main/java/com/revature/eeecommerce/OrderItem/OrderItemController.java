@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/orderItems")
+@CrossOrigin(origins = {"http://18.118.75.83:5173"})
 public class OrderItemController {
     private final OrderItemService orderItemService;
     private final ProductService productService;

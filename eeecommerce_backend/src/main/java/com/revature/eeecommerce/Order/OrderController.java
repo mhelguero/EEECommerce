@@ -25,7 +25,7 @@ import static com.fasterxml.jackson.databind.type.LogicalType.DateTime;
 
 @RestController
 @RequestMapping("/orders")
-@CrossOrigin(origins = {"http://18.118.75.83:5173"})
+@CrossOrigin(origins = {"http://18.118.75.83"})
 public class OrderController {
     private final OrderService orderService;
     private final CartService cartService;

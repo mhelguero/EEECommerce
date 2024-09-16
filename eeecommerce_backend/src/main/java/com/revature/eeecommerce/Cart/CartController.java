@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/cart")
-@CrossOrigin(origins = {"http://18.118.75.83:5173"})
+@CrossOrigin(origins = {"http://18.118.75.83"})
 public class CartController {
     private final CartService cartService;
     private final UserService userService;

@@ -46,10 +46,12 @@ const LoginForm: React.FC<Props> = ({ setUserId }) => {
       );
 
       // retrieve logged-in user's userId and userType from response headers
-      const userId = response.headers["userId"];
-      console.log(response);
-      console.log(response.headers);
-      console.log("LoginForm.tsx response.headers[\"userid\"]: ", userId);
+      const userId = response.headers["userid"];
+      if (userId) {
+        console.log("UserId:", userId);
+      } else {
+        console.log("No userId found in headers.");
+      }
       setUserId(userId);
 
       const userType = response.headers["usertype"];

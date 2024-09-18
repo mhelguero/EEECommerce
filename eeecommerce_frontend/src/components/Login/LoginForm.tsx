@@ -37,7 +37,8 @@ const LoginForm: React.FC<Props> = ({ setUserId }) => {
    */
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    console.log("LoginForm.tsx credentials: ", credentials);
+
+    // credentials is correct
     try {
       const response = await axios.post(
         `http://3.144.166.99:8080/auth?email=${credentials.email}&password=${credentials.password}`,
@@ -46,6 +47,7 @@ const LoginForm: React.FC<Props> = ({ setUserId }) => {
 
       // retrieve logged-in user's userId and userType from response headers
       const userId = response.headers["userid"];
+      console.log("LoginForm.tsx response.headers[\"userid\"]: ", userId);
       setUserId(userId);
 
       const userType = response.headers["usertype"];

@@ -49,7 +49,7 @@ const Cart: React.FC<Props> = ({
       userId: userId,
     };
     const response = await axios({
-      url: "http://3.141.164.75:8080/orders",
+      url: "http://3.144.166.99:8080/orders",
       method: "post",
       headers: header,
     });

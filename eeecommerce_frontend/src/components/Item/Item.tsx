@@ -16,7 +16,7 @@ type Props = {
 
 const Item: React.FC<Props> = ({ item, handleAddToCart, userId }) => {
   const handleAddToCartWithRequest = async (item: CartItemType) => {
-    const url = 'http://3.141.164.75:8080/cart';
+    const url = 'http://3.144.166.99:8080/cart';
     const params = new URLSearchParams();
     params.append('productId', item.id.toString()); // Ensure the parameter name matches what the server expects
     params.append('quantity', '1'); // You can adjust the quantity as needed

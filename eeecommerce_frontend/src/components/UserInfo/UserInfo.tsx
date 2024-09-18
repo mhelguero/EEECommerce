@@ -15,7 +15,7 @@ const UserInfo: React.FC<Props> = ({userId}: { userId: number | null }) => {
         try {
             console.log("user id in UserInfo.tsx: ", userId);
             const response = await axios.get(
-                `http://3.141.164.75:8080/users/${userId}`
+                `http://3.144.166.99:8080/users/${userId}`
             );
             setUserInfo(response.data);
 
@@ -38,7 +38,7 @@ const UserInfo: React.FC<Props> = ({userId}: { userId: number | null }) => {
 
         try {
             const response = await axios({
-                url: "http://3.141.164.75:8080/users",
+                url: "http://3.144.166.99:8080/users",
                 method: 'put',
                 data: user,
             });

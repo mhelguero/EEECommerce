@@ -40,7 +40,7 @@ const LoginForm: React.FC<Props> = ({ setUserId }) => {
 
     try {
       const response = await axios.post(
-        `http://3.141.164.75:8080/auth?email=${credentials.email}&password=${credentials.password}`,
+        `http://3.144.166.99:8080/auth?email=${credentials.email}&password=${credentials.password}`,
         credentials
       );
 

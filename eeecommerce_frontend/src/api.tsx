@@ -1,7 +1,7 @@
 import { Product, CartItemType } from "./types";
 
 export const getProducts = async (): Promise<CartItemType[]> => {
-  const response = await fetch("http://18.118.75.83:8080/products");
+  const response = await fetch("http://3.144.166.99:8080/products");
   if (!response.ok) {
     throw new Error("Network response was not ok");
   }

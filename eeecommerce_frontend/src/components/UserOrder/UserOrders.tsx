@@ -26,7 +26,7 @@ const UserOrders: React.FC<Props> = ({ userId }: { userId: number | null }) => {
 
         // GET reseponse.data has same structure as UserType, so can assign directly to userOrders via setUserOrders()
         setUserOrders(response.data);
-
+        
         const userOrders = response.data;
         console.log("userOrders retrieved: ", userOrders);
       } catch (error) {
@@ -49,9 +49,10 @@ const UserOrders: React.FC<Props> = ({ userId }: { userId: number | null }) => {
          <li>Orders:</li>
          {userOrders.map((order) => (
            <li key={order.orderId}>
-             Order ID: {order.orderId}, Date: {order.date}
+             Order ID: {order.orderId}
+             Date: {order.date}
            </li>
-         ))}
+         ))}    
        </ul>
     </>
   );

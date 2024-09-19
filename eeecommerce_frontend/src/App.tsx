@@ -11,7 +11,7 @@ import Cart from "./components/Cart/Cart";
 import { Wrapper, StyledButton } from "./App.styles";
 import { CartItemType } from "./types";
 import { getProducts } from "./api";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import Layout from "./pages/layout.tsx";
 import Registration from "./pages/registration.tsx";
 import Login from "./pages/login.tsx";
@@ -26,6 +26,7 @@ function App() {
 
   // route to home if user is logged in
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     if (userId && loggedIn) navigate("/");
@@ -175,7 +176,7 @@ function App() {
       </Routes>
 
       {/* If userId exists(user logged in), then show products for sale. If not, only show nav links from <Layout /> above */}
-      {userId ? (
+      {location.pathname === "/" && userId ? (
         <>
           {/* Cart Display*/}
           <Drawer

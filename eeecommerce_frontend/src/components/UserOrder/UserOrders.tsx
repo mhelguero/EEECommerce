@@ -25,10 +25,11 @@ const UserOrders: React.FC<Props> = ({ userId }: { userId: number | null }) => {
         );
 
         // GET reseponse.data has same structure as UserType, so can assign directly to userOrders via setUserOrders()
-        setUserOrders(response.data);
+        //setUserOrders(response.data);
         
         const userOrders = response.data;
         console.log("userOrders retrieved: ", userOrders);
+        
       } catch (error) {
         console.error("Error during request:", error);
       }
@@ -40,6 +41,31 @@ const UserOrders: React.FC<Props> = ({ userId }: { userId: number | null }) => {
     }
   }, [userId]);
 
+
+  const getOrderItems = async(orderId: number) =>{
+    try {
+      console.log("order id: ", orderId);
+      const response = await axios.get(
+        `http://3.144.166.99:8080/orderItems/order/${orderId}`
+      );
+      // response is
+      /*
+        [
+          {
+              "orderItemId": 1,
+              "orderId": 1,
+              "product_id": 1,
+              "count": 1
+          }
+        ]
+      */
+
+      // GET reseponse.data has same structure as UserType, so can assign directly to userOrders via setUserOrders()
+      console.log("Order Item data: ", response.data);
+    } catch (error) {
+      console.error("Error during request:", error);
+    }
+  }
   return (
     <>
       {/* display the retrieved user data as the content of this component*/}
@@ -50,7 +76,7 @@ const UserOrders: React.FC<Props> = ({ userId }: { userId: number | null }) => {
          {userOrders.map((order) => (
            <li key={order.orderId}>
              Order ID: {order.orderId}
-             Date: {order.date}
+             Time: {order.time}
            </li>
          ))}    
        </ul>

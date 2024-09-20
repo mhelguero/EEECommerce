@@ -116,10 +116,10 @@ public class OrderItemController {
     private ResponseEntity<?> findAllByOrderId(@PathVariable int orderId){
         try{
             List<OrderItem> orderItems = orderItemService.findAllByOrderId(orderId);
-            List<OrderItemDTO> orderItemDTOs = orderItems.stream()
-                    .map(this::mapToDTO)
-                    .collect(Collectors.toList());
-            return ResponseEntity.ok(orderItemDTOs);
+            // List<OrderItemDTO> orderItemDTOs = orderItems.stream()
+            //         .map(this::mapToDTO)
+            //         .collect(Collectors.toList());
+            return ResponseEntity.ok(orderItems);
         } catch(OrderItemNotFoundException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }

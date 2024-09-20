@@ -56,6 +56,7 @@ const OrderItems: React.FC<Props> = ({ orderId }) => {
         {orderItems.map((item) => (
             <ListItem key={item.orderItemId}>
             <ListItemText
+            // TODO: use getProducts to retrieve Products via item.product_id to be able to display name
                 primary={`${item.product}`}
                 secondary={
                 <>

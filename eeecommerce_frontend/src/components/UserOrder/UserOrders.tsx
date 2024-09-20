@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Order } from "../../types";
+import { Order, OrderItem } from "../../types";
 import { Card, CardContent, Typography, List, ListItem, ListItemText, Divider, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 import OrderItems from "../OrderItems/OrderItems";

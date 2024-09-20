@@ -76,7 +76,7 @@ const UserOrders: React.FC<Props> = ({ userId }: { userId: number | null }) => {
          {userOrders.map((order) => (
            <li key={order.orderId}>
              Order ID: {order.orderId}
-             Time: {order.time}
+             Time: {order.date}
            </li>
          ))}    
        </ul>

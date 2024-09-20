@@ -10,7 +10,7 @@ export type UserType = {
 export type Order = {
   orderId: number;
   user: UserType;
-  time: string; 
+  date: string; 
 };
 
 export type Product = {

@@ -43,14 +43,13 @@ const OrderItems: React.FC<Props> = ({ orderId, getOrderItems }) => {
         {orderItems.map((item) => (
             <ListItem key={item.orderItemId}>
             <ListItemText
-                primary={`Product ID: ${item.product_id}`}
+                primary={`${item.product.name}`}
                 secondary={
                 <>
                     <Typography component="span" variant="body2">
                     Quantity: {item.count}
                     </Typography>
                     <br />
-                    Order Item ID: {item.orderItemId}
                 </>
                 }
             />

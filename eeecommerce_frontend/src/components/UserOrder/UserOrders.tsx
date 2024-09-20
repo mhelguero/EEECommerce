@@ -28,16 +28,6 @@ const UserOrders: React.FC<Props> = ({ userId }: { userId: number | null }) => {
 
         const userOrders = response.data;
         console.log("userOrders retrieved: ", userOrders);
-        userOrders.map(async (order: { orderId: number }) => {
-          const orderItems = await getOrderItems(order.orderId);
-
-          orderItems.map((item: { orderItemId: number, order: Order, product: Product, count: number }) => {
-            console.log(`Order item details:
-              Count: ${item.count},
-              Order Item ID: ${item.orderItemId},              
-              Product ID: ${item.product.product_id}`);
-          });
-        });
       } catch (error) {
         console.error("Error during request:", error);
       }
@@ -80,7 +70,7 @@ const UserOrders: React.FC<Props> = ({ userId }: { userId: number | null }) => {
                   Order ID: {order.orderId}
                 </Typography>
                 <Typography variant="body2" color="textSecondary">
-                  Order Date: {order.date}
+                  Order Time: {order.date}
                 </Typography>
                 <Divider style={{ margin: "10px 0" }} />
 

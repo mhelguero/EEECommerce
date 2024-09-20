@@ -2,6 +2,7 @@ import axios from "axios";
 import { Order } from "../../types";
 import { Card, CardContent, Typography, List, ListItem, ListItemText, Divider, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
+import OrderItems from "../OrderItems/OrderItems";
 
 interface Props {
   userId: number | null;
@@ -49,6 +50,21 @@ const UserOrders: React.FC<Props> = ({ userId }: { userId: number | null }) => {
     }
   }, [userId]);
 
+  const getOrderItems = async (orderId: number|null): Promise<OrderItem[]> => {
+    try {
+        console.log("order id: ", orderId);
+        const response = await axios.get(
+        `http://3.144.166.99:8080/orderItems/order/${orderId}`
+        );
+
+        // GET reseponse.data has same structure as UserType, so can assign directly to userOrders via setUserOrders()
+        console.log("Order Item data: ", response.data);
+        return response.data;
+    } catch (error) {
+        console.error("Error during request:", error);
+        return [];
+    }
+    };
   
   return (
     <>
@@ -70,7 +86,7 @@ const UserOrders: React.FC<Props> = ({ userId }: { userId: number | null }) => {
                 <Divider style={{ margin: "10px 0" }} />
 
                 {/* Display order items for each order */}
-                <OrderItems orderId={order.orderId} />
+                <OrderItems orderId={order.orderId} getOrderItems={getOrderItems} />
               </CardContent>
             </Card>
           </Grid>

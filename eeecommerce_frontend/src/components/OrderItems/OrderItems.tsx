@@ -6,9 +6,10 @@ import { OrderItem } from "../../types";
 
 interface Props {
     orderId: number | null;
+    getOrderItems: (orderId: number | null) => Promise<OrderItem[]>;
   }
   
-const OrderItems: React.FC<Props> = ({ orderId }) => {
+const OrderItems: React.FC<Props> = ({ orderId, getOrderItems }) => {
     const [orderItems, setOrderItems] = useState<OrderItem[]>([]);
 
     useEffect(() => {
@@ -21,21 +22,7 @@ const OrderItems: React.FC<Props> = ({ orderId }) => {
     }, [orderId]);
 
 
-    const getOrderItems = async (orderId: number|null): Promise<OrderItem[]> => {
-        try {
-            console.log("order id: ", orderId);
-            const response = await axios.get(
-            `http://3.144.166.99:8080/orderItems/order/${orderId}`
-            );
-
-            // GET reseponse.data has same structure as UserType, so can assign directly to userOrders via setUserOrders()
-            console.log("Order Item data: ", response.data);
-            return response.data;
-        } catch (error) {
-            console.error("Error during request:", error);
-            return [];
-        }
-        };
+    
         
     return (
         <List>

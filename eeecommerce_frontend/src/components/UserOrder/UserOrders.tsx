@@ -25,7 +25,7 @@ const UserOrders: React.FC<Props> = ({ userId }: { userId: number | null }) => {
         );
 
         // GET reseponse.data has same structure as UserType, so can assign directly to userOrders via setUserOrders()
-        //setUserOrders(response.data);
+        setUserOrders(response.data);
         
         const userOrders = response.data;
         console.log("userOrders retrieved: ", userOrders);

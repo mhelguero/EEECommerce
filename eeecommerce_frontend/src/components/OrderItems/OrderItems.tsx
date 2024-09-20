@@ -57,7 +57,7 @@ const OrderItems: React.FC<Props> = ({ orderId }) => {
             <ListItem key={item.orderItemId}>
             <ListItemText
             // TODO: use getProducts to retrieve Products via item.product_id to be able to display name
-                primary={`${item.product}`}
+                primary={`${item.product.name}`}
                 secondary={
                 <>
                     <Typography component="span" variant="body2">

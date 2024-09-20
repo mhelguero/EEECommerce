@@ -15,6 +15,7 @@ const OrderItems: React.FC<Props> = ({ orderId, getOrderItems }) => {
     useEffect(() => {
         const fetchOrderItems = async () => {
         const items = await getOrderItems(orderId);
+        console.log("OrderItems.tsx orderItems: ", items);
         setOrderItems(items);
         };
 

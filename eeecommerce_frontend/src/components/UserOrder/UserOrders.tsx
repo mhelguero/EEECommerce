@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Order } from "../../types";
+import { Card, CardContent, Typography, List, ListItem, ListItemText, Divider, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 
 interface Props {
@@ -28,7 +29,7 @@ const UserOrders: React.FC<Props> = ({ userId }: { userId: number | null }) => {
         console.log("userOrders retrieved: ", userOrders);
         userOrders.map(async (order: { orderId: number }) => {
           const orderItems = await getOrderItems(order.orderId);
-          
+
           orderItems.map((item: { count: number, orderId: number, orderItemId: number, product_id: number }) => {
             console.log(`Order item details:
               Count: ${item.count},
@@ -48,49 +49,33 @@ const UserOrders: React.FC<Props> = ({ userId }: { userId: number | null }) => {
     }
   }, [userId]);
 
-  const getOrderItems = async (orderId: number) => {
-    try {
-      console.log("order id: ", orderId);
-      const response = await axios.get(
-        `http://3.144.166.99:8080/orderItems/order/${orderId}`
-      );
-      // response is
-      /*
-        [
-          {
-              "orderItemId": 1,
-              "orderId": 1,
-              "product_id": 1,
-              "count": 1
-          }
-        ]
-      */
-
-      // GET reseponse.data has same structure as UserType, so can assign directly to userOrders via setUserOrders()
-      console.log("Order Item data: ", response.data);
-      return response.data;
-    } catch (error) {
-      console.error("Error during request:", error);
-    }
-  };
+  
   return (
     <>
-      {/* display the retrieved user data as the content of this component*/}
-      <h2>Profile</h2>
-      <ul>
-        <li>Orders:</li>
+      <Typography variant="h4" gutterBottom>
+        Profile
+      </Typography>
+      <Typography variant="h6">Orders:</Typography>
+      <Grid container spacing={2}>
         {userOrders.map((order) => (
-          <>
-            <li key={order.orderId}>
-              Order ID: {order.orderId}
-              <br />
-              Time: {order.date}
-            </li>
-            <br />
-            <br />
-          </>
+          <Grid item xs={12} key={order.orderId}>
+            <Card>
+              <CardContent>
+                <Typography variant="h6">
+                  Order ID: {order.orderId}
+                </Typography>
+                <Typography variant="body2" color="textSecondary">
+                  Order Date: {order.date}
+                </Typography>
+                <Divider style={{ margin: "10px 0" }} />
+
+                {/* Display order items for each order */}
+                <OrderItems orderId={order.orderId} />
+              </CardContent>
+            </Card>
+          </Grid>
         ))}
-      </ul>
+      </Grid>
     </>
   );
 };

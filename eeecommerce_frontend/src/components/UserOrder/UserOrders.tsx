@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Order, OrderItem } from "../../types";
+import { Order, OrderItem, Product } from "../../types";
 import { Card, CardContent, Typography, List, ListItem, ListItemText, Divider, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 import OrderItems from "../OrderItems/OrderItems";
@@ -31,12 +31,11 @@ const UserOrders: React.FC<Props> = ({ userId }: { userId: number | null }) => {
         userOrders.map(async (order: { orderId: number }) => {
           const orderItems = await getOrderItems(order.orderId);
 
-          orderItems.map((item: { count: number, orderId: number, orderItemId: number, product_id: number }) => {
+          orderItems.map((item: { orderItemId: number, order: Order, product: Product, count: number }) => {
             console.log(`Order item details:
               Count: ${item.count},
-              Order ID: ${item.orderId},
-              Order Item ID: ${item.orderItemId},
-              Product ID: ${item.product_id}`);
+              Order Item ID: ${item.orderItemId},              
+              Product ID: ${item.product.product_id}`);
           });
         });
       } catch (error) {
